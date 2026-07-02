@@ -1,0 +1,27 @@
+# Размер хранилища для данных NFS-сервера
+storageSize: 10Gi
+
+# Количество реплик (обычно 1, т.к. NFS – stateful)
+replicaCount: 1
+
+# Настройки образа NFS-сервера
+image:
+  repository: itsthenetwork/nfs-server-alpine
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Настройки Service для доступа к NFS
+service:
+  type: ClusterIP
+  port: 2049
+
+# Имя StorageClass, которое будет создано
+storageClass:
+  name: nfs-storage
+  defaultClass: false   # Сделать StorageClass стандартным, если true
+
+# Параметры для NFS-экспорта (можно оставить по умолчанию)
+nfs:
+  exportPath: /exports
+  # Дополнительные параметры монтирования (опционально)
+  # extraOptions: "no_root_squash"
