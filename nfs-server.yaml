@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/<ваш-username>/<репозиторий>.git'  # ЗАМЕНИТЕ
+    repoURL: 'git@github.com:FourtyNight/K3S_NFS_Storage_Provisioner.git'  # ЗАМЕНИТЕ
     targetRevision: HEAD
     path: charts/nfs-server
     helm:
@@ -14,10 +14,10 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: nfs-system
+    namespace: nfs
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=false
