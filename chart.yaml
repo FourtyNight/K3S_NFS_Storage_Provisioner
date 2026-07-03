@@ -1,6 +1,0 @@
-apiVersion: v2
-name: nfs-storage
-description: Внутренний NFS-сервер для Kubernetes с динамическим провижинингом
-type: application
-version: 0.1.0
-appVersion: "2.4.0"
