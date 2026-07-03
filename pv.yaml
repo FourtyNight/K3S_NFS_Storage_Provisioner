@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.pvcName }}
+  annotations:
+    # Создаём PV с самым низким приоритетом, чтобы он появился первым
+    argocd.argoproj.io/sync-wave: "-1"
+  labels:
+    app: nfs-provisioner
+spec:
+  capacity:
+    storage: {{ .Values.storageSize }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.hostPath }}
+  claimRef:
+    namespace: {{ .Values.pvcNamespace }}
+    name: {{ .Values.pvcName }}
