@@ -18,6 +18,6 @@ nfs-server-provisioner:
   #     effect: "NoSchedule"
 
   # Дополнительные параметры
-   image:
-     repository: ganesa/nfs-ganesha
-     tag: v4.0.0s
+  #image:
+   #  repository: ganesa/nfs-ganesha
+    # tag: v4.0.0s
