@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/FourtyNight/K3S_NFS_Storage_Provisioner.git'  # ЗАМЕНИТЕ
     targetRevision: HEAD
-    path: charts/nfs-pv
+    path: .nfs-pv.yaml
     helm:
       valueFiles:
         - values.yaml
