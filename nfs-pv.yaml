@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-pv
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/FourtyNight/K3S_NFS_Storage_Provisioner.git'  # ЗАМЕНИТЕ
+    targetRevision: HEAD
+    path: charts/nfs-pv
+    helm:
+      valueFiles:
+        - values.yaml
+      # Можно переопределить параметры прямо здесь, если нужно
+      # values: |
+      #   storageSize: 20Gi
+      #   hostPath: /mnt/nfs
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nfs   # PV не привязан к namespace, но мы создаём его в контексте этого namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true   # создаст namespace nfs, если его нет
