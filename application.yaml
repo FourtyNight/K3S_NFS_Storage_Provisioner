@@ -6,19 +6,18 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner
-    chart: nfs-server-provisioner
-    targetRevision: 1.4.0
+    repoURL: 'https://github.com/FourtyNight/K3S_NFS_Storage_provisioner.git'  # ЗАМЕНИТЕ
+    targetRevision: HEAD
+    path: charts/nfs-provisioner
     helm:
-      values: |
-        persistence:
-          enabled: true
-          storageClass: "-"
-          size: 10Gi
-        storageClass:
-          defaultClass: true
-        nodeSelector:
-          kubernetes.io/hostname: node1
+      valueFiles:
+        - values.yaml
+      # Если нужно принудительно обновить зависимости:
+      # values: |
+      #   nfs-server-provisioner:
+      #     persistence:
+      #       storageClass: "-"
+      # ...
   destination:
     server: https://kubernetes.default.svc
     namespace: nfs
