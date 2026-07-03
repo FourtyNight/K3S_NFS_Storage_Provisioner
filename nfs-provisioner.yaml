@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-provisioner
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner
+    chart: nfs-server-provisioner
+    targetRevision: 1.4.0   # используйте актуальную версию (можно проверить на https://github.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner/releases)
+    helm:
+      # Передаём параметры для чарта
+      values: |
+        # Настройка хранения – используем статический PV (storageClass: "-")
+        persistence:
+          enabled: true
+          storageClass: "-"
+          size: 10Gi
+
+        # Настройка StorageClass, который будет создан
+        storageClass:
+          defaultClass: true   # сделать StorageClass стандартным (если нужно)
+
+        # NodeSelector – на какой ноде должен запускаться NFS-сервер
+        nodeSelector:
+          kubernetes.io/hostname: node1   # ЗАМЕНИТЕ на имя вашей ноды
+
+        # Можно также задать tolerations, если нужно
+        # tolerations:
+        #   - key: "CriticalAddonsOnly"
+        #     operator: "Exists"
+        #     effect: "NoSchedule"
+
+        # Если нужно переопределить имя релиза для согласованности с PV
+        # fullnameOverride: "nfs-server-provisioner"  # если используем кастомное имя
+
+        # Параметры образа и ресурсов (можно оставить по умолчанию)
+        # image:
+        #   repository: ganesa/nfs-ganesha
+        #   tag: v4.0.0
+        # resources: ...
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nfs
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
