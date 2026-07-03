@@ -1,0 +1,10 @@
+apiVersion: v2
+name: nfs-provisioner
+description: NFS Ganesha provisioner with static PV
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  - name: nfs-server-provisioner
+    version: "1.4.0"
+    repository: "https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner/"
