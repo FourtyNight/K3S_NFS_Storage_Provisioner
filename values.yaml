@@ -2,7 +2,7 @@
 storageSize: 10Gi
 
 # Путь на хосте, куда будут сохраняться данные
-hostPath: /srv/volumes/data-nfs-server-provisioner-0
+hostPath: /nfs
 
 # Имя PVC, которое будет создано провижинером (должно совпадать)
 pvcName: data-nfs-server-provisioner-0
