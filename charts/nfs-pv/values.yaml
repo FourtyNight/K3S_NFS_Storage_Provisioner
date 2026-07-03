@@ -1,0 +1,5 @@
+storageSize: 10Gi
+hostPath: /root/nfs
+pvcName: data-nfs-server-provisioner-0
+pvcNamespace: nfs
+nodeName: node1   # замените на имя вашей ноды

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.pvcName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  labels:
+    app: nfs-provisioner
+spec:
+  capacity:
+    storage: {{ .Values.storageSize }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.hostPath }}
+    type: DirectoryOrCreate
+  claimRef:
+    namespace: {{ .Values.pvcNamespace }}
+    name: {{ .Values.pvcName }}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - {{ .Values.nodeName }}
